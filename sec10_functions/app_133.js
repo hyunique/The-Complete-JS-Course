@@ -26,7 +26,7 @@ const book = lufthansa.book;
 /*
 Does NOT Work
   book(23, 'Sara Williams')
-the 'book' is not method anymore, it is a separate functio.
+the 'book' is not method anymore, it is a separate function.
 so the 'this' keyword is now undefined.*/
 
 //We use 'call' method to execute 'book' function, then 'this'keyword is set to eurowings.
