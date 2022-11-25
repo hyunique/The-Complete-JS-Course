@@ -44,3 +44,50 @@ matilda.calcAge() //console logs matilda object
 
 const f = jonas.calcAge;
 f(); //console logs undefined (normal function)
+
+
+
+////////////////////////////////////////
+// 98. Regular Functions vs Arrow Functions
+
+const jonas = {
+    firstName: 'Jonas',
+    year: 1991,
+    calcAge: function () {
+      // console.log(this);
+        console.log(2037 - this.year);
+        
+      // Solution 1
+        const self = this; // self or that 
+        //normal functions are undefined with this keyword. 
+      const isMillenial = function () {
+        console.log(self);
+        console.log(self.year >= 1981 && self.year <= 1996);
+        };
+        
+      // Solution 2
+      const isMillenial = () => {
+        console.log(this); // Arrow f uses lexical scope. this returns jonas object
+        console.log(this.year >= 1981 && this.year <= 1996);
+      };
+      isMillenial();
+    },
+    greet: () => {
+      console.log(this);
+      console.log(`Hey ${this.firstName}`);
+    },
+  };
+  jonas.greet();
+  jonas.calcAge();
+  // arguments keyword
+  const addExpr = function (a, b) {
+    console.log(arguments);
+    return a + b;
+  };
+  addExpr(2, 5);
+  addExpr(2, 5, 8, 12);
+  var addArrow = (a, b) => {
+    console.log(arguments);
+    return a + b;
+  };
+  addArrow(2, 5, 8);
