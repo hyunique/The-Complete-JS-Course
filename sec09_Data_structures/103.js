@@ -31,6 +31,19 @@ const restaurant = {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '20:00',
+    address,
+  }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]}
+      will be delivered to ${address} at ${time}`
+    );
+  },
+
+
   openingHours: {
     thu: {
       open: 12,
@@ -72,3 +85,44 @@ console.log(i, j, k);
 // This can be useful when using api ; when you don't know array's length
 const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r)
+
+/////////////////////////////////////////////////
+// 104. Destructuring objects
+
+// To destructure objects, use exact name of the property. But the order does not matter.
+const { name, openingHours, categories } = restaurant;
+console.log(name, openingHours, categories);
+
+// To specify new name
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags
+} = restaurant;
+console.log(hours);
+
+// Setting default value
+const { menu = [], starterMenu: starters = [] } = restaurant;
+
+// Mutating variables
+let f = 111;
+let g = 777;
+const obj = { f: 23, g: 56, h: 87 };
+/* { f, g} = obj 
+Here engine recognizes curly brace as a block.
+You can't assign value to a block, so it throws error.
+Simply add parans around it to avoid that error.*/ 
+({ f, g } = obj);
+console.log(f, g);
+
+
+// Nested objects
+const { fri: { open: o, close: cl } } = openingHours;
+console.log(o, cl);
+
+restaurant.orderDelivery({
+  time: '22:30',
+  address: 'Via sole, 21',
+  mainIndex: 2,
+  starterIndex: 2,
+})
