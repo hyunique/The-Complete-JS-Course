@@ -1,4 +1,19 @@
+// 103. Destructuring arrays
+
 'use strict';
+
+const arr = [2, 3, 4];
+const a = arr[0];
+const b = arr[1];
+const c = arr[2];
+// Destructuring array : A line below is same as 4 lines above
+// Original array is not changed.
+const [x, y, z] = arr;
+console.log(x, y, z);
+console.log(arr);
+
+
+
 
 // Data needed for a later exercise
 const flights =
@@ -11,6 +26,10 @@ const restaurant = {
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
 
   openingHours: {
     thu: {
@@ -27,3 +46,29 @@ const restaurant = {
     },
   },
 };
+
+let [main, ,secondary] = restaurant.categories;
+console.log(main, secondary);
+
+/* Switching variables
+const temp = main;
+main = secondary;
+secondary = main;
+console.log(main, secondary) 
+This can be written as below*/
+[main, secondary] = [secondary, main];
+console.log(main, secondary);
+
+// Receive 2 return values from a function
+const [starter, mainCourse] = restaurant.order(2, 0);
+console.log(starter, mainCourse);
+
+// When there is nested array
+const nested = [2, 4, [5, 6]];
+const [i, , [j, k]] = nested;
+console.log(i, j, k);
+
+// Default values
+// This can be useful when using api ; when you don't know array's length
+const [p = 1, q = 1, r = 1] = [8, 9];
+console.log(p, q, r)
