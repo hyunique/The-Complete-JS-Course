@@ -43,6 +43,10 @@ const restaurant = {
     );
   },
 
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`Here is your delicious pasta with ${ing1}, ${ing2}, ${ing3},`)
+  },
+
 
   openingHours: {
     thu: {
@@ -126,3 +130,51 @@ restaurant.orderDelivery({
   mainIndex: 2,
   starterIndex: 2,
 })
+
+
+///////////////////////////////////////////
+/* 
+105. The spread operator
+Can be used with all iterable data structure.
+Iterables: arrays, strings, maps, sets. Not objects
+Can be useful when we need to pass in multiple elements into a function
+Spread operator takes all the elements in the array. It does not create new variable.
+In consequence, we can only use it when otherwise we would separate them with commas.
+*/
+
+const arrays = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+console.log(badNewArr);
+
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+
+console.log(...newArr);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+console.log(newMenu);
+
+// Copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+
+// Join two or more arrays
+const wholeMenu = [...restaurant.mainMenu,...restaurant.starterMenu];
+console.log(wholeMenu);
+
+//Iterables
+const str = 'jonas';
+const letters = [...str, '', 'S.'];
+console.log(letters);
+console.log(...str);
+// This throws an error.
+// Spread operator is expected only when we pass in to function or when we build new arrays.
+// console.log(`${...str} Schedtmann`);
+
+// Passing into function real-world example
+const ingredients = [
+  prompt("Let's make pasta! Ingredient 1?"),
+  prompt("Ingredient 2?"),
+  prompt("Ingredient 3?")
+];
+console.log(...ingredients);
+restaurant.orderPasta(...ingredients);
