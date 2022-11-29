@@ -135,6 +135,7 @@ restaurant.orderDelivery({
 ///////////////////////////////////////////
 /* 
 105. The spread operator
+ : to expand an array to individual elements
 Can be used with all iterable data structure.
 Iterables: arrays, strings, maps, sets. Not objects
 Can be useful when we need to pass in multiple elements into a function
@@ -146,7 +147,7 @@ const arrays = [7, 8, 9];
 const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
 console.log(badNewArr);
 
-const newArr = [1, 2, ...arr];
+const newArr = [1, 2, ...arrays];
 console.log(newArr);
 
 console.log(...newArr);
@@ -178,3 +179,19 @@ const ingredients = [
 ];
 console.log(...ingredients);
 restaurant.orderPasta(...ingredients);
+
+
+
+///////////////////////////////////////////
+/* 106. Rest pattern and parameters
+ : Opposite of spread. 
+   to collect multiple elements and compress them into array
+ Rest element must be the last element of array.
+
+ */
+// Rest pattern, becuase on let side of =
+const [m, n, ...others] = [1, 2, 3, 4, 5];
+console.log(m, n, others);
+
+const [pizza, ,risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log(pizza, risotto, otherFood)
