@@ -194,4 +194,34 @@ const [m, n, ...others] = [1, 2, 3, 4, 5];
 console.log(m, n, others);
 
 const [pizza, ,risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu];
-console.log(pizza, risotto, otherFood)
+console.log(pizza, risotto, otherFood);
+
+
+//////////////////////////////////////////
+/* 114.Looping objects: Object keys, values, entries*/
+
+// Property NAMES(Key)
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr =`We are open on ${properties.length} days: `;
+
+for (const day of properties) {
+  openStr+= `${day}, `
+}
+console.log(openStr)
+
+
+// Property VALUES
+const values = Object.values(openingHours);
+console.log(values);
+
+
+// Property ENTRIES (=names+values =entire object)
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+    // Destructuring + looping object
+for (const [key, {open, close}] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
