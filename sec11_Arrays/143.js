@@ -62,4 +62,62 @@ console.log(currenciesUnique);
 currenciesUnique.forEach(function (value, key, map) { //so here use _ instead of key
     console.log(`${key}: ${value}`)
     // this logs USD: USD EUR: EUR GBP: GBP. There is no key or index in Sets
+});
+
+
+
+////////////////////////////////
+//150. the map method
+const eurToUsd = 1.1;
+// const movementsUSD = movements.map(function (mov) {
+//     return mov * eurToUsd;
+// })
+const movementsUSD = movements.map(mov => mov * eurToUsd)
+/* code below gives same result as above, but different philosophy.
+map method suits better in modern js / functional programming
+const movementsUSDfor = [];
+for (const mov of movements) movementsUSDfor.push(mov * eurToUsd);
+console.log(movementsUSDfor)
+*/
+console.log(movements)
+console.log(movementsUSD)
+
+const movDescriptions = movements.map((mov, i) => `Movement ${i+1}: You ${mov < 0 ? 'deposited':'withdrew'}${Math.abs(mov)}`);
+console.log(movDescriptions)
+
+
+
+////////////////////////////////
+//152. the filter method
+
+const deposits = movements.filter(function (mov) {
+    return mov > 0;
 })
+const withdrawals = movements.filter(mov => mov < 0);
+// const depositsFor = [];
+// for (const mov of movements) if (mov >0) depositsFor.push(mov)
+
+console.log(movements)
+console.log(deposits, withdrawals)
+
+
+
+////////////////////////////////
+//153. the reduce method
+
+//first argument of callback of reduce method is always accumulator
+// With each iteration, the updated accumulator is returned
+// Always manually return at the end of iteration. That value will be acc for next iteration 
+// Second argument of the method is starting value. here: 0
+const balance = movements.reduce(function (acc, cur, i, arr) {
+    return acc + cur
+}, 0);
+console.log(balance)
+
+// Maximum value
+// When finding maximum value, always set the initial value as 1st element of the array
+const max = movements.reduce((acc, mov) => {
+    if (acc > mov) return acc;
+    else return mov;
+}, movements[0]);
+console.log(max)
