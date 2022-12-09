@@ -34,9 +34,9 @@ const checkDogs = function (dogsJulia, dogsKate) {
 
     total.forEach(function (age, i, arr) {
         if(age > 2){
-            console.log(`Dog number ${i} is an adult, and is ${age} years old`)
+            console.log(`Dog number ${i+1} is an adult, and is ${age} years old`)
         } else {
-            console.log(`Dog number ${i} is still a puppy 🐶`)
+            console.log(`Dog number ${i+1} is still a puppy 🐶`)
         }
     });
 }
