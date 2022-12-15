@@ -121,3 +121,16 @@ const max = movements.reduce((acc, mov) => {
     else return mov;
 }, movements[0]);
 console.log(max)
+
+
+////////////////////////////////
+// 157. the Find method
+/* While the Filter returns array of all the elements that match the conditoin,
+Find method returns only the first element, which is not an array.
+Usually goal of this method is to find a exact one element.
+*/
+const firstWithdrawal = movements.find(mov => mov < 0)
+// returns -400
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+
