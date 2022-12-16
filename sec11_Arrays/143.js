@@ -134,3 +134,19 @@ const firstWithdrawal = movements.find(mov => mov < 0)
 
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 
+
+// 162. Flat and FlatMap
+// flat basically flattens depth of nested arrays.
+// argument of flat method indicates the depth of nested arrays. default is 1
+const flatArr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, 5, [6]], 7, 8];
+console.log(arrDeep.flat(2)) 
+
+// flatMap = .map().flat()
+// when you need to flatten depth, you should use map and flat separately.
+const overalBalance = accounts
+    .flatMap(acc => acc.movements)
+    .reduce(acc, mov => acc + mov, 0);
+    console.log(overalBalance3)
