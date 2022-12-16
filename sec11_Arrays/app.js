@@ -56,7 +56,7 @@ const account1 = {
   const inputTransferAmount = document.querySelector('.form__input--amount');
   const inputLoanAmount = document.querySelector('.form__input--loan-amount');
   const inputCloseUsername = document.querySelector('.form__input--user');
-const inputClosePin = document.querySelector('.form__input--pin');
+  const inputClosePin = document.querySelector('.form__input--pin');
   
 const displayMovements = function (movements) {
     containerMovements.innerHTML = '';
@@ -73,11 +73,10 @@ const displayMovements = function (movements) {
     });
 }
 
-const calcDisplayBalance = function (movements) {
-    const balance = movements.reduce((acc, mov) => acc + mov, 0);
-    labelBalance.textContent = `${balance}€`
+const calcDisplayBalance = function (acc) {
+    acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+    labelBalance.textContent = `${acc.balance}€`
 }
-
 
 const calcDisplaySummary = function (acc) {
     const incomes = acc.movements
@@ -99,7 +98,7 @@ const calcDisplaySummary = function (acc) {
         })
         .reduce((acc, int) => acc + int, 0);
     labelSumInterest.textContent = `${interest}€`
-}
+};
 
 
 const createUsernames = function (accs) {
@@ -113,32 +112,54 @@ const createUsernames = function (accs) {
 };
 createUsernames(accounts)
 
+const updateUI = function (acc) {
+     // Display movements
+     displayMovements(acc.movements);
+     // Display balance
+     calcDisplayBalance(acc);
+     // Display summary
+     calcDisplaySummary(acc);
+}
 
 // Event Handler
 let currentAccount;
 btnLogin.addEventListener('click', function (e) {
-   // Prevent form from submitting
+    // Prevent form from submitting
     e.preventDefault();
     currentAccount = accounts.find(acc => acc.userName === inputLoginUsername.value)
     //Optional chaining. check pin only when currentAccount exists. 
     //When account doesn't exist, it will give undefined instead of error
     if (currentAccount?.pin === Number(inputLoginPin.value)) {
-    // Display UI and message
-        labelWelcome.textContent = `Welcom back, ${currentAccount.owner.split(' ')[0]}`
+        // Display UI and message
+        labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`
         containerApp.style.opacity = 100;
         // Clear input fields
         inputLoginUsername.value = inputLoginPin.value = '';
         // Loose focus on input after log in
         inputLoginPin.blur()
-        // Display movements
-        displayMovements(currentAccount.movements);
-        // Display balance
-        calcDisplayBalance(currentAccount.movements);
-        // Display summary
-        calcDisplaySummary(currentAccount);
-}
 
-})
+        // update UI
+        updateUI(currentAccount);
+    }
 
+});
 
+btnTransfer.addEventListener('click', function (e) {
+    e.preventDefault();
+    const amount = Number(inputTransferAmount.value);
+    const receiverAcc = accounts.find(acc => acc.userName === inputTransferTo.value);
+    inputTransferAmount.value = inputTransferTo.value = '';
+
+    if (amount > 0 &&
+        receiverAcc &&
+        currentAccount.balance >= amount &&
+        receiverAcc?.userName !== currentAccount.userName
+    ) {
+        // Transfer money
+        currentAccount.movements.push(-amount);
+        receiverAcc.movements.push(amount);
+
+        updateUI(currentAccount);
+    }
+});
 
