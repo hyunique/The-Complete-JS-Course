@@ -68,3 +68,14 @@ console.log((2.7).toFixed(0)) // '3' returns string
 console.log((2.7).toFixed(3)) // '2.700'
 console.log((2.345).toFixed(2)) // '2.35'
 console.log(+(2.345).toFixed(2)) // 2.35
+
+
+/* ------------------------------------------------ */
+/* 172. The remainder operator */
+//usage example
+labelBalance.addEventListener('click', function () {
+    [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+        if (i % 2 === 0) row.style.backgroundColor = 'skyblue'
+        if (i % 3 === 0) row.style.backgroundColor = 'gray';
+    })
+})
