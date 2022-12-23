@@ -126,7 +126,7 @@ console.log(max)
 ////////////////////////////////
 // 157. the Find method
 /* While the Filter returns array of all the elements that match the conditoin,
-Find method returns only the first element, which is not an array.
+Find method returns the first element(not array) that is returned 'true' from boolean condition.
 Usually goal of this method is to find a exact one element.
 */
 const firstWithdrawal = movements.find(mov => mov < 0)
