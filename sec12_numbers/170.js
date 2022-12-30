@@ -79,3 +79,37 @@ labelBalance.addEventListener('click', function () {
         if (i % 3 === 0) row.style.backgroundColor = 'gray';
     })
 })
+
+
+/* ------------------------------------------------ */
+/* 175. Creating Dates */
+// 3 ways of creating dates
+
+
+const now = new Date();
+console.log(now); // logs date and time it was created(file was saved)
+
+// by parsing string
+// Try using this method only for JS created strings as third example, otherwise it is prone to create errors 
+console.log(new Date('Aug 02 2020 18:05:41'));
+console.log(new Date('December 24, 2015'));
+console.log(new Date(account1.movemnetsDates[0]));
+
+console.log(new Date(2037, 10, 19, 15, 23, 5)); // logs Thu Nov 19 2037 15:2305 GMT+0000
+
+console.log(new Date(0)); // 0 milli seconds after first unix time
+
+// Working with dates
+// Dates created here are special type of object, so it has own methods
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear()); // 2037
+console.log(future.getMonth()); // 10 -> means november
+console.log(future.getDate()); // 19
+console.log(future.getDay()); // 4 -> 0 is sunday, 4 is thursday
+//getHours, getMinutes, getSeconds works same
+
+console.log(future.toISOString());
+
+console.log(future.getTime()); // amount of seconds past unix time
+console.log(Date.now());
