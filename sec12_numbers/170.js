@@ -113,3 +113,33 @@ console.log(future.toISOString());
 
 console.log(future.getTime()); // amount of seconds past unix time
 console.log(Date.now());
+
+
+/* ------------------------------------------------ */
+/* 177. Operations with Dates */
+// if you need precise dates, consider using free library like moment.js
+
+const calcDaysPassed = (date1, date2) => Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
+//converts(miliseconds to seconds * to minutes * to hours * to days )
+const days1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 24));
+const days2 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 6));
+
+console.log(days1, days2); // logs 10, 8
+
+
+/* ------------------------------------------------ */
+/* 180. Timers : setTimeout and setInterval */
+
+// ---setTimeout---
+const ingredients = ['olives', 'spinach'];
+const pizzaTimer = setTimeout((ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`), 3000, ...ingredients);
+console.log('Waiting...')
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+// logs -> 'Waiting... Here is your pizza with olives and'
+
+// ---setInterval---
+setInterval(function() {
+    const now = new Date();
+    console.log(now)
+}, 1000);
+// logs current time every second
