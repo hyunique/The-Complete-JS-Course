@@ -120,14 +120,24 @@ const handleHover = function (e) {
 //  })
 
 ///////////////////////////////////////
-// Sticky navigation
-const initialCoords = section1.getBoundingClientRect()
-window.addEventListener('scroll', function () {
-    if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky')
-    else nav.classList.remove('sticky');
-})
+// Sticky navigation + intersection observer api
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height; // to have responsive height
+
+const stickyNav = function (entries) {
+    const [entry] = entries;
+    if (!entry.isIntersecting) nav.classList.add('sticky');
+    else nav.classList.remove('sticky')
+}
+const headerObserver = new IntersectionObserver(stickyNav, {
+    root: null,
+    threshold: 0,
+    rootMargin: `${navHeight}px`,
+});
+headerObserver.observe(header);
 
 
+/*
 //----------------------------------------------------//
 //selecting elements
 console.log(document.documentElement)
@@ -157,7 +167,7 @@ document.querySelector('.btn--close-cookie').addEventListener('click', function 
     // = message.parentElement.removeChild(message)
 })
 
-/* 187. Styles. Attributes and Classes
+ 187. Styles. Attributes and Classes
 // Styles
 message.style.backgroundColor = '#373839';
 message.style.width = '120%';
@@ -184,7 +194,7 @@ logo.classList.add('c','j')
 logo.classList.remove('c')
 logo.classList.toggle('c')
 logo.classList.contains('c')
-*/
+
 
 
 
@@ -202,3 +212,30 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 document.querySelector('.nav').addEventListener('click', function (e) {
     
 })
+
+
+
+// sticky nav
+const initialCoords = section1.getBoundingClientRect()
+window.addEventListener('scroll', function () {
+    if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky')
+    else nav.classList.remove('sticky');
+})
+
+
+
+// Intersection Observer API
+const obsCallback = function (entries, observer) {
+    // this is called whenever the target element(= observed element, section1)
+    //intersects root element at the threshold we defined.
+    entries.forEach(entry => {
+
+    })
+}
+const obsOptions = {
+    root: null, //entire viewport
+    threshold: [0, 0.2], // =0%, 20% of observed element is visible in viewport 
+}
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1);
+*/
