@@ -109,7 +109,12 @@ const renderCountry = function (data, className='') {
     </article>
     `
         countriesContainer.insertAdjacentHTML('beforeend', html);
-        countriesContainer.style.opacity = 1;
+        // countriesContainer.style.opacity = 1;
+}
+
+const renderError = function (msg) {
+    countriesContainer.insertAdjacentText('beforeend', msg);
+    // countriesContainer.style.opacity = 1;
 }
 //-----------------------------------------------------//
 ////251. Promises and Fetch API///////////////////////////////////
@@ -117,12 +122,12 @@ const renderCountry = function (data, className='') {
 
 const request = fetch('https://restcountries.com/v2/name/portugal');
 
+
 const getCountryData = function (country) {
     // Country 1
     fetch(`https://restcountries.com/v2/name/${country}`) //returns promise
-        .then(function (response) { // if fulfilled promise, do this
-            return response.json()//parsing body data. this also returns promise
-        }).then(function (data) { // handle returned promise from json()
+        .then(response => response.json()) // if fulfilled promise, do this //parsing body data. this also returns promise
+        .then(function (data) { // handle returned promise from json()
             renderCountry(data[0])
             const neighbour = data[0].borders?.[0]
 
@@ -131,7 +136,22 @@ const getCountryData = function (country) {
             // By returning this fetch, we can chain method outside insted of writing callback hell
         })
         .then(response => response.json())
-        .then(data => renderCountry(data, 'neighbour'));
+        .then(data => renderCountry(data, 'neighbour'))
+        .catch(err => {
+            console.error(`${err}`)// Handling errors
+            renderError(`Something went wrong (┬┬﹏┬┬) ${err.message}. Try again!`)
+        })
+        .finally(() => {
+            // This will be called for both fulfilled & failed fetch
+            // Only works when there is a returned promise
+            // e.g. loading spinner
+            countriesContainer.style.opacity = 1; // fade-in no matter of fetch status
+        }); 
 }
 
-getCountryData('portugal')
+
+btn.addEventListener('click', function () {
+    getCountryData('portugal');
+});
+
+getCountryData('portugal');
