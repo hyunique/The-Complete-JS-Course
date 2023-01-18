@@ -209,3 +209,86 @@ whereAmI()
 whereAmI()
 whereAmI()
 console.log('first')
+
+
+//-----------------------------------------------------//
+// 265. Running Promises in parallel
+/* Whenever you need to do multiple async tasks at the same time, 
+and when each task does not depend on each other, always run them in parallel.*/
+
+const get3Countries = async function (c1, c2, c3) {
+    try {
+        // const [data1]= await getJson(`https://restcountries.com/v2/name/${c1}`)
+        // const [data2]= await getJson(`https://restcountries.com/v2/name/${c2}`)
+        // const [data3] = await getJson(`https://restcountries.com/v2/name/${c3}`)
+        const data = await Promise.all(
+            [getJson(`https://restcountries.com/v2/name/${c1}`),
+            getJson(`https://restcountries.com/v2/name/${c2}`),
+            getJson(`https://restcountries.com/v2/name/${c3}`)
+            ]
+        );
+        console.log(data.map(d => d[0].capital));
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+get3Countries('portugal', 'canada', 'tanzania')
+
+
+
+//-----------------------------------------------------//
+// 266. Promises combinators : race, allSettled, any
+
+/* Promise.race
+ : receives and returns an array of promise
+ : this promise is settled(value is available) as soon as one of the input promises settled.
+ : we only get one result(the fastest one), not array of all 
+*/
+    (async function () {
+        const res = await Promise.race([
+            getJson(`https://restcountries.com/v2/name/italy`),
+            getJson(`https://restcountries.com/v2/name/japan`),
+            getJson(`https://restcountries.com/v2/name/mexico`)
+        ]);
+    })()
+
+/* .race can be useful e.g. when user has very slow internet, 
+reject when it passes certain amount of time to load */
+const timeout = function (s) {
+    return new Promise(function (_, reject) {
+        setTimeout(function () {
+            reject(new Error('Request took too long!'))
+        }, s * 1000);
+    })
+};
+Promise.race(
+    [getJson(`https://restcountries.com/v2/name/ethiopia`), timeout(1)
+    ]).then(res => console.log(res[0]))
+    .catch(err => console.log(err));
+
+
+
+// Promise.allSettled
+Promise.allSettled([
+    Promise.resolve('Success'),
+    Promise.reject('Error'),
+    Promise.resolve('Success again'),
+]).then(res => console.log(res))
+
+
+Promise.allSettled([
+    Promise.resolve('Success'),
+    Promise.reject('Error'),
+    Promise.resolve('Success again'),
+]).then(res => console.log(res))
+    .catch(err => console.log(err));
+
+
+// Promise.any [ES2021]
+Promise.any([
+    Promise.resolve('Success'),
+    Promise.reject('Error'),
+    Promise.resolve('Success again'),
+]).then(res => console.log(res))
+    .catch(err => console.log(err));
